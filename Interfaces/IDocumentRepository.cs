@@ -11,7 +11,7 @@ namespace DocumentTrackerWebApi.Interfaces
 {
     public interface IDocumentRepository
     {
-         Task<List<Document>> GetAllAsync(CommentQueryObject queryObject);
+         Task<List<Document>> GetAllAsync();
         Task<Document?> GetByIdAsync(int id);
         Task<Document> AddAsync(Document document);
         Task<Document?> UpdateAsync(int id,UpdateDocumentDTO updatedocumentDTO);

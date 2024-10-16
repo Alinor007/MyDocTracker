@@ -37,10 +37,10 @@ namespace DocumentTrackerWebApi.Controllers
 
         // GET: api/documents
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<DocumentDTO>>> GetAll([FromQuery] CommentQueryObject queryObject)
+        public async Task<ActionResult<IEnumerable<DocumentDTO>>> GetAll()
         {
-            var documents = await _documentRepo.GetAllAsync(queryObject);
-            var documentsDto = documents.Select(d => d.ToDocumentDto()).ToList();
+            var documents = await _documentRepo.GetAllAsync();
+            var documentsDto = documents.Select(d => d.ToDocumentDto());
             return Ok(documentsDto);
         }
 
@@ -72,7 +72,7 @@ namespace DocumentTrackerWebApi.Controllers
             var documentModel = createDocumentDto.ToDocumentFromCreateDTO();
 
             documentModel.UserId = AppUser.Id;
-            await _documentRepo.AddAsync(documentModel);
+            await _documentRepo.AddAsync(documentModel); 
             // Create DocumentApproval
             var documentApproval = new DocumentApproval
             {

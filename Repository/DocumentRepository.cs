@@ -28,18 +28,12 @@ namespace DocumentTrackerWebApi.Repository
         }
 
         // Retrieves all document records
-        public async Task<List<Document>> GetAllAsync(CommentQueryObject queryObject)
+         public async Task<List<Document>> GetAllAsync()
         {
-            var doc = _context.Documents.Include(a => a.User).AsQueryable();
-
-         
-            if (queryObject.IsDecsending == true)
-            {
-                doc = doc.OrderByDescending(c => c.Created);
-            }
-            return await doc.ToListAsync();
-
-         
+            // Include related entities if necessary (e.g., User)
+            return await _context.Documents
+                                 .Include(d => d.User)
+                                 .ToListAsync();
         }
 
         // Retrieves a document record by ID
@@ -58,13 +52,7 @@ namespace DocumentTrackerWebApi.Repository
             document.Created = DateTime.UtcNow; // Automatically set Created date
             document.Updated = DateTime.UtcNow; // Set Updated date to now
             await _context.Documents.AddAsync(document);
-    
-
             await _context.SaveChangesAsync(); // Saves and generates Document.Id
-
-
-
-
             return document;
         }
 

@@ -15,7 +15,7 @@ namespace DocumentTrackerWebApi.Mappers
             return new DocumentDTO
             {
                 Id = documentModel.Id,
-                CreatedBy = documentModel.User.Email,
+                CreatedBy = documentModel.User != null ? documentModel.User.Email : string.Empty,  // Handle null case
                 Name = documentModel.Name,
                 Status = documentModel.status,
                 Created = documentModel.Created,
@@ -28,6 +28,7 @@ namespace DocumentTrackerWebApi.Mappers
         {
             return new Document
             {
+
                 Name = documentDTO.Name,
                 status = documentDTO.Status,
                 Created = DateTime.UtcNow, // Set by server
